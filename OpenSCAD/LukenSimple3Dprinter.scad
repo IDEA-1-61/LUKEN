@@ -1,8 +1,9 @@
 module agujerosNEMA(){
+    
     //agujero central
     circle(d=22+1+1);
-    //agujeros montaje
     
+    //agujeros montaje  
     for(v=[0:3]){
       rotate(90*v)
       //translate([16,16])
@@ -10,6 +11,21 @@ module agujerosNEMA(){
       circle(d=3.1+0.25);
     }
     
+}
+
+module agujerosCamisaTornillo(){
+    
+    //agujero central
+    circle(d=10.2+0.25);
+    
+    //agujeros montaje  
+    for(v=[0:3]){
+      rotate(90*v)
+      //translate([16,16])
+        translate([10.9/2,10.9/2])
+      circle(d=3.5+0.25);
+    }
+  
 }
 
   module Poste(altura=10,espesor=3,tol=1,diamShaft=2){
@@ -741,149 +757,8 @@ module ApoyoMotorZ(){
          
      }
  }
- 
-module carroX_0(){
-    tol=1;
-    diamTorBal=4.6;
-    distBalerosX=40;
-    lonNEMA=42.3;
-    distEntreTorY=lonNEMA+24+(tol*2);
-    diamTorProf=5.8;
-    minkow=7;
-    alturaPoste=8.3;
-    espesor=5;//espesor 6
-    calcePerfil=3.67;
-    diamTuerca=10.58;
-    altTuerca=3.5;
-
-    esp=3.75;
-    altPil=16;
-    disXP=24.75;
-    offNema=35;
-    
-    tolM4=0.5;//antes 0.25
-    minkBase=10;
-    alturaNema=40+1.3;
-            
-    perfil=20;
-     canal=6;
-     ajEsX=4;
-     diamT=7;
-
-     angulo=90;
-     ajNema=5;
-     ajNemaY=6;
-     
-             
-difference(){
-
-  union(){
-
-    linear_extrude(height=espesor)
-       difference(){   
-           
-                minkowski(){
-                      polygon([[-offNema-(lonNEMA/2)+ajNema,(lonNEMA/2)-ajNemaY],[-offNema-(lonNEMA/2)+ajNema,-(lonNEMA/2)+ajNemaY],[-distBalerosX/2,-distEntreTorY/2],[distBalerosX/2,0],[-distBalerosX/2,distEntreTorY/2]]);
-                     circle(r=minkow);
-                 }
-             
-     
-            //perforacionBalero_1
-            translate([-distBalerosX/2,-distEntreTorY/2])
-             circle(d=diamTorBal+tol);
-            
-              //perforacionBalero_2
-            translate([-distBalerosX/2,+distEntreTorY/2])
-             circle(d=diamTorBal+tol);
-             
-             //perforacionBalero_3
-            translate([distBalerosX/2,0])
-             circle(d=diamTorBal+tol);
-             
-                          
-           //perforacion Banda
-        
-                 //  square([6,2.14],center=true);
-                 //  translate([6,0])
-                  // square([6,7],center=true);  
-                
-                   translate([-offNema,0])
-                   agujerosNEMA();  
-                     
-             }
-             
-                 //poste_1
-    translate([-distBalerosX/2,-distEntreTorY/2])
-    Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
-              
-         //poste_2
-    translate([-distBalerosX/2,distEntreTorY/2])
-    Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
-         
-               //poste_3
-    translate([distBalerosX/2,0])
-    Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
-             
- 
-       
-             
-    }            
-
-       if(altTuerca>0){    
-               //tuerca para perforacionBalero_1
-                      translate([-distBalerosX/2,-distEntreTorY/2])
-                      cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
-                   
-              //tuerca para perforacionBalero_2
-              translate([-distBalerosX/2,distEntreTorY/2])
-                      cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
-                       
-            //tuerca para perforacionBalero_3
-             translate( [distBalerosX/2,0])
-                 cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
-           
-           translate([3+6,0,0])
-              cylinder(d=4+tolM4,h=espesor*3,center=true);
-             
-        
-        }
-         
-         
-     }
-     
-
-  
-   recorte=perfil-(2*espesor);
-  translate([-perfil/2,0,-perfil/2])
-  rotate([0,90,0])
-  difference(){
-    entradaPerfil(perfil=20,canal=6,esp=6,ajEsX=4,diamT=7,pieza=0,angulo=90);
-     rotate([0,0,90])
-      for(h=[0:1]){
-          
-               rotate([0,0,180*h])  
-               translate([5.15,-recorte/2,-50])
-               cube([100,recorte,100]);
-                   
-        }
-  }
-  
-      /*
-      rotate([180,0,0])
-      translate([-offNema,0,-espesor])
-      motorNEMA();*/
-      
-      
-      //translate([-distBalerosX/2,-distEntreTorY/2,16])
-      //rodamientoV();
-      
-      
-      //cabeza de tornillo m4 prueba
-      //translate([9,0,5])
-      //cylinder(d=7,h=3);
-  }//fin modulo carroX_0
-  
-  module carroX_0_V2(){
+   
+  module carroX_0(){
     tol=1;
     diamTorBal=4.6;
     distBalerosX=40;
@@ -966,7 +841,7 @@ difference(){
       //cubo canal perfil
        
        translate([-perfil/2,-canal/2,-ajEsX])      
-        cube([(perfil/2)+(distBalerosX/2)+14+tol+14+espesor,canal,ajEsX]);
+        cube([(perfil/2)+(distBalerosX/2),canal,ajEsX]);
 
        
              
@@ -1055,6 +930,188 @@ espAp=6;
       //translate([9,0,5])
       //cylinder(d=7,h=3);
 }//fin modulo carroX_0
+
+  module carroX_1(){
+    tol=1;
+    diamTorBal=4.6;
+    distBalerosX=40;
+    lonNEMA=42.3;
+    distEntreTorY=lonNEMA+24+(tol*2);
+    diamTorProf=5.8;
+    minkow=7;
+    alturaPoste=8.3;
+    espesor=5;//espesor 6
+    calcePerfil=3.67;
+    diamTuerca=10.58;
+    altTuerca=3.5;
+
+    esp=3.75;
+    altPil=16;
+    disXP=24.75;
+    offNema=35;
+    
+    tolM4=0.5;//antes 0.25
+    minkBase=10;
+    alturaNema=40+1.3;
+            
+    perfil=20;
+     canal=6;
+     ajEsX=4;
+     diamT=7;
+
+     angulo=90;
+     ajNema=5;
+     ajNemaY=6;
+     
+     
+
+     
+             
+difference(){
+
+  union(){
+
+    linear_extrude(height=espesor)
+       difference(){   
+           
+                minkowski(){
+                      polygon([[-distBalerosX/2,-distEntreTorY/2],[0,-(distEntreTorY/2)],[(distBalerosX/2),-minkow],[distBalerosX/2,minkow],[0,distEntreTorY/2],[-distBalerosX/2,distEntreTorY/2]]);
+                     circle(r=minkow);
+                 }
+             
+     
+            //perforacionBalero_1
+            translate([-distBalerosX/2,-distEntreTorY/2])
+             circle(d=diamTorBal+tol);
+            
+              //perforacionBalero_2
+            translate([-distBalerosX/2,+distEntreTorY/2])
+             circle(d=diamTorBal+tol);
+             
+             //perforacionBalero_3
+            translate([distBalerosX/2,0])
+             circle(d=diamTorBal+tol);
+               
+                
+                   translate([-offNema,0])
+                   //agujerosNEMA(); 
+                    minkowski(){
+                        square([31,31],center=true);
+                        circle(r=5.5);
+                    } 
+                     
+             }
+             
+                 //poste_1
+    translate([-distBalerosX/2,-distEntreTorY/2])
+    Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
+              
+         //poste_2
+    translate([-distBalerosX/2,distEntreTorY/2])
+    Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
+         
+               //poste_3
+    translate([distBalerosX/2,0])
+    Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
+             
+             
+             
+             lonApTor=30;
+      //cubo apoyo tornillo acerado
+       
+       translate([-lonApTor/2,-espesor,-lonApTor])      
+        cube([lonApTor,espesor,lonApTor]);
+
+       
+             
+    }//fin union            
+
+       if(altTuerca>0){    
+               //tuerca para perforacionBalero_1
+                      translate([-distBalerosX/2,-distEntreTorY/2])
+                      cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
+                   
+              //tuerca para perforacionBalero_2
+              translate([-distBalerosX/2,distEntreTorY/2])
+                      cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
+                       
+            //tuerca para perforacionBalero_3
+             translate( [distBalerosX/2,0])
+                 cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
+           
+           //tuerca para perforacionBalero_3 CORREXION EXTRA
+             translate( [distBalerosX/2,0,-25])
+                 cylinder(d=diamTuerca+tol,h=(altTuerca)*2+50,$fn=6,center=true);
+          
+        }
+         
+        
+        
+        //espacio entre tornillo acerado y perfil de aluminio 18mm
+        //diametro de tornillo acerado es de 8mm
+        //superficie de pieza a perfil es de 8.7mm
+        //movimieto es de 18mm-8.7mm+4mm
+        translate([0,0,-13.3])
+        rotate([90,0,0])
+        translate([0,0,-50])
+        linear_extrude(height=100)
+        agujerosCamisaTornillo();
+     }//fin difference
+ 
+
+espAp=6;
+
+//apoyo nucleo
+  /*
+   recorte=perfil-(2*espesor);
+  translate([-perfil/2,0,-perfil/2])
+  rotate([0,90,0])
+  difference(){ 
+    union(){
+          
+    
+       //base de apoyo a nucleo de perfil
+        medioPerfil=perfil/2;
+        anCan=10.6;
+        altTra=7;
+        linear_extrude(height=espAp)
+        rotate(-90)
+        difference(){
+            union(){
+                polygon([[-medioPerfil,-medioPerfil],[medioPerfil,-medioPerfil],[anCan/2,-medioPerfil+altTra],[anCan/2,0],[-anCan/2,0],[-anCan/2,-medioPerfil+altTra]]);
+                circle(d=anCan); 
+            }
+            circle(d=diamT);         
+        }
+     
+    //vastagos para rieles de perfil
+        
+        //translate([-(perfil/2),-canal/2,0])      
+        //cube([ajEsX,canal,canal+espAp]);
+        
+   }
+   
+   
+  
+   
+    
+  } //fin entrada Perfil
+  */
+  
+      /*
+      rotate([180,0,0])
+      translate([-offNema,0,-espesor])
+      motorNEMA();*/
+      
+      
+      //translate([-distBalerosX/2,-distEntreTorY/2,16])
+      //rodamientoV();
+      
+      
+      //cabeza de tornillo m4 prueba
+      //translate([9,0,5])
+      //cylinder(d=7,h=3);
+}//fin modulo carroX_1
   
     //#######RENDERIZADOS######
 
@@ -1097,8 +1154,11 @@ cylinder(d=9,h=3.8);
 
 //ApoyoMotorZ();
   
- // carroX_0();
+//carroX_0(); chaflan de postes para rodamientos de 2 mm.
  
- carroX_0_V2();
+
+// carroX_1();
+ 
+
   
   
