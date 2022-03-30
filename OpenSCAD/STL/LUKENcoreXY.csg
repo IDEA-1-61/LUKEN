@@ -1,6 +1,0 @@
-linear_extrude(height = 5, center = false, convexity = 1, scale = [1, 1], $fn = 100, $fa = 12, $fs = 2) {
-	multmatrix([[25, 0, 0, 0], [0, 25, 0, 0], [0, 0, 25, 0], [0, 0, 0, 1]]) {
-		import(file = "DXF/X5SmonturaPoleas.dxf", layer = "", origin = [0, 0], scale = 1, convexity = 1, $fn = 100, $fa = 12, $fs = 2, timestamp = 1527546969);
-	}
-}
-
