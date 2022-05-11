@@ -898,6 +898,22 @@ module ApoyoMotorZ(){
                     
                        translate([-offNema,0])
                        agujerosNEMA();  
+                     
+                        //agujeros cable 1
+                       translate([-offNema-5,-(lonNEMA/2)-4])
+                       rotate(-30)
+                       minkowski(){
+                           square([4,0.01],center=true);
+                           circle(d=3);
+                       }
+                       
+                        //agujeros cable 2
+                       translate([-offNema-5,(lonNEMA/2)+4])
+                       rotate(30)
+                       minkowski(){
+                           square([4,0.01],center=true);
+                           circle(d=3);
+                       }
                          
                  }
                  
@@ -1093,6 +1109,8 @@ difference(){
                         square([31,31],center=true);
                         circle(r=5.5);
                     } 
+                    
+                  
                      
              }
              
@@ -1157,199 +1175,6 @@ espAp=6;
 
 
 }//fin modulo carroZ_1
-
-   
-module carroZ_2(){
-    
-    tol=1;
-    diamTorBal=4.6;
-    distBalerosX=40+0.5;
-    //distBalerosX=40,
-    lonNEMA=42.3;
-    distEntreTorY=lonNEMA+24+(tol*2);
-    diamTorProf=5.8;
-    minkow=7;
-    alturaPoste=8.3;
-    espesor=5;//espesor 6
-    calcePerfil=3.67;
-    diamTuerca=10.58;
-    altTuerca=3.5;
-
-    esp=3.75;
-    altPil=16;
-    disXP=24.75;
-    offNema=35;
-    
-    tolM4=0.5;//antes 0.25
-    minkBase=10;
-    alturaNema=40+1.3;
-            
-    perfil=20;
-     canal=6;
-     ajEsX=4;
-     diamT=7;
-
-     angulo=90;
-     ajNema=5;
-     ajNemaY=6;
-     
-     
-
-         
-  intersection(){             
-    difference(){
-
-      union(){
-
-        linear_extrude(height=espesor)
-           difference(){   
-               
-                    minkowski(){
-                          polygon([[-distBalerosX/2,-distEntreTorY/2],[0,-(distEntreTorY/2)],[(distBalerosX/2),-minkow],[distBalerosX/2,minkow],[0,distEntreTorY/2],[-distBalerosX/2,distEntreTorY/2]]);
-                         circle(r=minkow);
-                     }
-                 
-         
-                //perforacionBalero_1
-                translate([-distBalerosX/2,-distEntreTorY/2])
-                 circle(d=diamTorBal+tol);
-                
-                  //perforacionBalero_2
-                translate([-distBalerosX/2,+distEntreTorY/2])
-                 circle(d=diamTorBal+tol);
-                 
-                 //perforacionBalero_3
-                translate([distBalerosX/2,0])
-                 circle(d=diamTorBal+tol);
-                   
-                    
-                       translate([-offNema,0])
-                       //agujerosNEMA(); 
-                        minkowski(){
-                            square([31,31],center=true);
-                            circle(r=5.5);
-                        } 
-                         
-                 }
-                 
-                     //poste_1
-        translate([-distBalerosX/2,-distEntreTorY/2])
-        Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
-                  
-             //poste_2
-        translate([-distBalerosX/2,distEntreTorY/2])
-        Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
-             
-                   //poste_3
-        translate([distBalerosX/2,0])
-        Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
-                 
-                 
-                 
-                 //lonApTor=28;
-                 
-                 lonApTor=71+(espesor/2);
-                 larApTor=42;
-          //cubo apoyo tornillo acerado
-           
-           translate([-(larApTor+espesor)/2,-espesor/2,-lonApTor])      
-            cube([larApTor+espesor,espesor,lonApTor]);
-            
-             translate([0,0,-13.3])
-            rotate([90,0,0])
-            translate([0,0,0])
-            cylinder(d=22,h=espesor);
-
-           
-                 
-        }//fin union            
-
-           if(altTuerca>0){    
-                   //tuerca para perforacionBalero_1
-                          translate([-distBalerosX/2,-distEntreTorY/2])
-                          cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
-                       
-                  //tuerca para perforacionBalero_2
-                  translate([-distBalerosX/2,distEntreTorY/2])
-                          cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
-                           
-                //tuerca para perforacionBalero_3
-                 translate( [distBalerosX/2,0])
-                     cylinder(d=diamTuerca+tol,h=(altTuerca)*2,$fn=6,center=true);
-               
-               //tuerca para perforacionBalero_3 CORREXION EXTRA
-                 //translate( [distBalerosX/2,0,-25])
-                     //cylinder(d=diamTuerca+tol,h=(altTuerca)*2+50,$fn=6,center=true);
-              
-            }
-             
-            
-            
-            //espacio entre tornillo acerado y perfil de aluminio 18mm
-            //diametro de tornillo acerado es de 8mm
-            //superficie de pieza a perfil es de 8.7mm
-            //movimieto es de 18mm-8.7mm+4mm
-            translate([0,0,-13.3])
-            rotate([90,0,0])
-            translate([0,0,-50])
-            linear_extrude(height=100)
-            agujerosCamisaTornillo(2.8);
-            
-            
-            
-            //agujeros para motor NEMA 17
-            translate([0,0,-50])
-            rotate([90,0,0])
-            translate([0,0,-50])
-            linear_extrude(height=100)
-            agujerosNEMA();  
-            
-            
-            minkNE_0=6;
-            //agujeros para placa delgada motor NEMA 17
-            //translate([0,(espesor/2)+(espesor/4),-50+(tol/2)])
-            translate([0,0,-50+(tol/2)])
-            for(l=[0:1]){
-                rotate([0,0,180*l])
-                translate([0,(espesor/2)+(espesor/4),0])
-                    minkowski(){
-                       cube([lonNEMA+tol-(2*minkNE_0),espesor+tol,lonNEMA+tol-(2*minkNE_0)],center=true);
-                        rotate([90,0,0])
-                       cylinder(r=minkNE_0,h=0.01,center=true);
-                    } 
-                    
-                }
-                
-             //translate([0,-(espesor/2)-(espesor/4),-50+(tol/2)])
-            //cube([lonNEMA+tol,espesor+tol,lonNEMA+tol],center=true); 
-            
-            movRec=24;   
-            translate([-movRec,0,0])
-            rotate([90,90,0])
-            translate([0,0,-50])
-            linear_extrude(height=100)
-            polygon([[0,0],[30,0],[20,10],[0,10]]);
-            
-            
-            mirror([1,0,0]){
-                translate([-movRec,0,0])
-                rotate([90,90,0])
-                translate([0,0,-50])
-                linear_extrude(height=100)
-                polygon([[0,0],[30,0],[20,10],[0,10]]);
-            }
-            
-            
-            
-            
-         }//fin difference
-         
-         cube([200,200,200],center=true);
-     }//fin intersection
-//espAp=6;
-
-
-}//fin modulo carroZ_2
 
 module carroZ_3(){
     
@@ -1645,20 +1470,23 @@ tol=1,
     esp=3.75;
     altPil=16;
     disXP=24.75;
-    
+    sepBanda=14;
+    guiBanda=2.75;
+    basBanda=21.5;
     //distBalerosX=40 distrancia anterior
-    
+     diamGuarda=27+(2*espesor)+4.25;//guarda rueda
              
 difference(){
 
   union(){
 
     linear_extrude(height=espesor)
+      //linear_extrude(height=espesor+15.75)
        difference(){   
            
            union(){
                 minkowski(){
-                      polygon([[-distBalerosX/2,-distEntreTorY/2],[distBalerosX/2,-distEntreTorY/2],[distBalerosX/2,distEntreTorY/2],[-distBalerosX/2,distEntreTorY/2]]);
+                      polygon([[-distBalerosX/2,-distEntreTorY/2],[(distBalerosX/2)- guiBanda,-(distEntreTorY/2)-sepBanda],[(distBalerosX/2)+4,-basBanda],[(distBalerosX/2)+4,basBanda],[(distBalerosX/2)- guiBanda,(distEntreTorY/2)+sepBanda],[-distBalerosX/2,distEntreTorY/2]]);
                      circle(r=minkow);
                  }
                   translate([-distBalerosX/2,-distEntreTorY/2])
@@ -1666,6 +1494,12 @@ difference(){
                  
                  translate([-distBalerosX/2,distEntreTorY/2])
                  circle(d=20);
+                 
+                 //guarda rueda
+                 translate([distBalerosX/2,0])
+                 circle(d=diamGuarda); 
+                 
+                 
              }
              
      
@@ -1696,6 +1530,30 @@ difference(){
                          
              }
              
+             abreRod=18.5;
+             
+             difference(){
+                 union(){
+                     //soporte banda 1
+                     linear_extrude(height=espesor+15.75)
+                       minkowski(){
+                              polygon([[(distBalerosX/2)- guiBanda,abreRod],[(distBalerosX/2)+4,abreRod],[(distBalerosX/2)+4,basBanda],[(distBalerosX/2)- guiBanda,(distEntreTorY/2)+sepBanda]]);
+                             circle(r=minkow);
+                         }
+                         
+                         //soporte banda 2
+                     linear_extrude(height=espesor+15.75)
+                       minkowski(){
+                              polygon([[(distBalerosX/2)- guiBanda,-(distEntreTorY/2)-sepBanda],[(distBalerosX/2)+4,-basBanda],[(distBalerosX/2)+4,-abreRod],[(distBalerosX/2)- guiBanda,-abreRod]]);
+                             circle(r=minkow);
+                         }
+                       
+                     }
+                     //perforacion rodamiento abajo
+                     translate([(distBalerosX/2),0,0])
+                     cylinder(d=27,h=60);
+                 }
+             
                  //poste_1
     translate([-distBalerosX/2,-distEntreTorY/2])
     Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
@@ -1707,6 +1565,16 @@ difference(){
                //poste_3
     translate([distBalerosX/2,0])
     Poste(altura=alturaPoste+espesor,espesor=espesor*0.6,tol=1,diamShaft=diamTorBal);
+                 
+                 //guarda rueda
+     translate([distBalerosX/2,0,0])   
+      difference(){
+          cylinder(d=diamGuarda,h=espesor+15.75);
+          translate([0,0,espesor-0.01])
+          cylinder(d=27,h=1000); 
+          translate([-500+3,0,500])
+         cube([1000,1000,1000],center=true); 
+      }   
              
        
              
@@ -1728,118 +1596,34 @@ difference(){
              
             
         }
+        
+
+        //perforacion Banda 1
+        translate([(distBalerosX/2)+1,-basBanda,espesor+alturaPoste+2.25])
+            linear_extrude(height=100)
+            rotate([0,0,90])
+          import("C:/Users/pablo/OneDrive/Documents/PROYECTOS/Mant_Des_Imp3D/LUKEN/Planos/ToyRepCart.dxf");
          
+        //perforacion Banda 2
+        mirror([0,1,0]){
+             translate([(distBalerosX/2)+1,-basBanda,espesor+alturaPoste+2.25])
+            linear_extrude(height=100)
+            rotate([0,0,90])
+          import("C:/Users/pablo/OneDrive/Documents/PROYECTOS/Mant_Des_Imp3D/LUKEN/Planos/ToyRepCart.dxf");
+        }
          
      }
      
      
   //espesor=5;
-  tolT=0.5;
+  //tolT=0.5;
      
-    translate([distBalerosX/2,16,0])
-     rotate([0,0,90])
-     translate([0,0,espesor+alturaPoste+2.25])
-       union(){
-           cylinder(d=5.8,h=6+tolT);
-            translate([10,0,0])
-            hull(){
-                cylinder(d=5.8,h=6+tolT);
-                translate([8,0,0])
-                cylinder(d=0.01,h=6+tolT);
-            }
-             //tapa superior a banda
-            translate([0,0,6+tolT])
-            hull(){
-                  cylinder(d=5.8,h=espesor);
-
-                translate([10,0,0])
-                cylinder(d=5.8,h=espesor);
-                translate([18,0,0])
-                cylinder(d=0.01,h=espesor);
-                
-            }
-            //tapa inferior a banda
-            /*translate([0,0,-espesor])
-            hull(){
-                  cylinder(d=5.8,h=espesor);
-
-                translate([10,0,0])
-                cylinder(d=5.8,h=espesor);
-                translate([18,0,0])
-                cylinder(d=0.01,h=espesor);
-                
-            }*/
-            
-            translate([0,0,+espesor-alturaPoste+tol-13.25])
-             linear_extrude(height=15.75)
-           
-            union(){
-                hull(){
-                    circle(d=5.8);
-                    translate([10,0,0])
-                    circle(d=5.8);
-                    translate([18,0,0])
-                    circle(d=0.01);
-                }
-            }
-        }
-        
-        mirror([0,1,0]){
-                 translate([distBalerosX/2,16,0])
-             rotate([0,0,90])
-             translate([0,0,espesor+alturaPoste+2.25])
-               union(){
-                   cylinder(d=5.8,h=6+tolT);
-                    translate([10,0,0])
-                    hull(){
-                        cylinder(d=5.8,h=6+tolT);
-                        translate([8,0,0])
-                        cylinder(d=0.01,h=6+tolT);
-                    }
-                     //tapa superior a banda
-                    translate([0,0,6+tolT])
-                    hull(){
-                          cylinder(d=5.8,h=espesor);
-
-                        translate([10,0,0])
-                        cylinder(d=5.8,h=espesor);
-                        translate([18,0,0])
-                        cylinder(d=0.01,h=espesor);
-                        
-                    }
-                    //tapa inferior a banda
-                    /*translate([0,0,-espesor])
-                    hull(){
-                          cylinder(d=5.8,h=espesor);
-
-                        translate([10,0,0])
-                        cylinder(d=5.8,h=espesor);
-                        translate([18,0,0])
-                        cylinder(d=0.01,h=espesor);
-                        
-                    }*/
-                    
-                    translate([0,0,+espesor-alturaPoste+tol-13.25])
-                     linear_extrude(height=15.75)
-                   
-                    union(){
-                        hull(){
-                            circle(d=5.8);
-                            translate([10,0,0])
-                            circle(d=5.8);
-                            translate([18,0,0])
-                            circle(d=0.01);
-                        }
-                    }
-                }
-            }//fin mirror
-        
-        
-            linear_extrude(height=100)
-import("C:/Users/pablo/OneDrive/Documents/PROYECTOS/Mant_Des_Imp3D/LUKEN/Planos/ToyRepCart.dxf");
-            
-            
-
+     //linear_extrude(height=15.75)
+       
+     //guarda rueda
+         //translate([distBalerosX/2,0,0])    
+         //cylinder(d=diamGuarda,h=espesor); 
+      
   }//fin modulo carroX
  
  
@@ -1972,50 +1756,54 @@ cylinder(d=9,h=3.8);
     
   //chaflan de postes para rodamientos de 2 mm.
 //carroZ_0(); 
+
+
  
  
  //chaflan de postes para redondeo de bordes 5 mm.
 //chaflan de postes para rodamientos de 2 mm.
 //carroZ_1();
 
- //chaflan de postes para redondeo de bordes 5 mm.
-//chaflan de postes para rodamientos de 2 mm.
-//carroZ_2();
+
 
 //chaflan de apoyo de rodamiento de r=1.9mm
 //fillet bordes r=1mm
 //fillet refuerzos r=2mm
 //carroZ_3();
- 
- 
- 
- //chaflan de 1mm para los apoyos de los tornillos
- //fillet de 5mm para las orillas
- //fillet de 3mm para las orillas
-//monturaExtrusor();
-
 
 
 //$fn=100;
 
-
-//intersection(){
 //chaflan r=2mm para apoyo de postes
+//chaflan de apoyo de rodamiento de r=1.9mm
+/*intersection(){
+
+translate([0,0,-17])
 carroX();
 
-//cube([200,200,200],center=true);
+cube([200,200,200],center=true);
 
-//}
+}*/
 
-
+carroX();
 
 /*
+cube([20,400,20],center=true);
+
 distBalerosX=40;
 distEntreTorY=36.6;
 //translate([-distBalerosX/2,-distEntreTorY/2,16])
-translate([distBalerosX/2,0,18.8])
+translate([distBalerosX/2,0,18.8-17])
+rodamientoV();
+
+translate([-distBalerosX/2,-distEntreTorY/2,18.8-17])
+rodamientoV();
+
+translate([-distBalerosX/2,distEntreTorY/2,18.8-17])
 rodamientoV();
 */
+
+
 
 /*
    //perforacion Banda
@@ -2035,7 +1823,11 @@ rodamientoV();
 //chaflan de apoyo de rodamiento de r=1.9mm
 //fillet bordes r=1mm
 //fillet refuerzos r=2mm
- // monturaExtrusor();
+
+ //chaflan de 1mm para los apoyos de los tornillos
+ //fillet de 5mm para las orillas
+ //fillet de 3mm para las orillas
+//monturaExtrusor();
   
  
 
