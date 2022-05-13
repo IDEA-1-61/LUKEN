@@ -1785,7 +1785,7 @@ cube([200,200,200],center=true);
 
 }*/
 
-carroX();
+//carroX();
 
 /*
 cube([20,400,20],center=true);
@@ -1827,7 +1827,7 @@ rodamientoV();
  //chaflan de 1mm para los apoyos de los tornillos
  //fillet de 5mm para las orillas
  //fillet de 3mm para las orillas
-//monturaExtrusor();
+monturaExtrusor();
   
  
 

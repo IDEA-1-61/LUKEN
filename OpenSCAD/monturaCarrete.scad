@@ -15,7 +15,7 @@ module agujerosNEMA(){
     
 }
 
- module monturaExtrusor(){
+ module monturaSpool(){
     tol=1;
     diamTorBal=4.6;
     distBalerosX=40;
@@ -70,12 +70,23 @@ module agujerosNEMA(){
       //cubo para tornillos
                     //translate([-espesor,-espesor-(lon20/2),-lon20])
                    // cube([lon20*3,espesor,lon20]);
-                
-               translate([(lonX_c/2)-espesor,0,-lonZ_c/2])
-                difference(){   
-                   cube([lonX_c,lonY_c,lonZ_c],center=true);
+                 grosExtra=6;
+               translate([(lonX_c/2)-espesor,0,-(lonZ_c/2)])
+                difference(){ 
+                  translate([0,0,grosExtra/2])
+                      union(){  
+                         cube([lonX_c,lonY_c,lonZ_c+grosExtra],center=true);              //poste de carrete
+                          translate([0,0,-(lonZ_c+grosExtra)/2])
+                         cylinder(d=20,h=lonZ_c+grosExtra+espesor);
+                      }
                     translate([0,0,-espesor/2])
                    cube([lonX_c*2,lonY_c-(espesor*2),lonZ_c-espesor],center=true);
+                    //recorte tornillo m8
+                    cylinder(d=8+tol,h=100,center=true);
+                   
+                   //recorte cabeza tornillo m8
+                   translate([0,0,(lonZ_c/2)-(espesor)])
+                    cylinder(d=14.3+tol,h=(5.52*2)+(2*tol),$fn=6,center=true);
                 }
                 
                   //postes tronillos M4 con 2mm extra
@@ -109,12 +120,14 @@ module agujerosNEMA(){
             
             despX=0;//desplazamiento de apoyoNEMA en X
             despZ=5;
+            
+            
  
  }//fin modulo
  
  
  
- //chaflan de 1mm para los apoyos de los tornillos
+  //chaflan de 1mm para los apoyos de los tornillos
  //fillet de 5mm para las orillas
  //fillet de 3mm para las orillas
-monturaExtrusor();
+monturaSpool();
