@@ -1,0 +1,28 @@
+https://community.octoprint.org/t/octoprint-tells-me-my-firmware-lacks-support-for-host-action-commands-what-does-this-mean/34588
+
+Ver valores actuales de firware M503
+
+Correr PID autotune para calibrar hotend a 210 grados
+
+M303 E0 C8 S210
+
+valores obtenidos:
+
+#define DEFAULT_Kp 16.57
+#define DEFAULT_Ki 0.97
+#define DEFAULT_Kd 70.92
+
+Gcode que inicia valores:
+
+M301 E0 P16.57 I0.97 D70.92
+
+Correr PID autotune para calibrar cama caliente a 100 grados
+
+M303 E-1 C8 S100
+
+valores obtenidos:
+
+#define DEFAULT_bedKp 58.62
+#define DEFAULT_bedKi 6.33
+#define DEFAULT_bedKd 361.76
+
